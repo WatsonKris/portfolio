@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kris Watson | Executive Recruiting — IoT &amp; Edge AI</title>
+<style>
+  :root{
+    --bg:#070c16;
+    --bg-alt:#0b1120;
+    --card:#0f1830;
+    --card-hover:#121d3a;
+    --line:#1c2b4a;
+    --line-soft:#152238;
+    --cyan:#22d3ee;
+    --cyan-dim:#0891b2;
+    --cyan-glow:rgba(34,211,238,0.35);
+    --text:#eaf2f8;
+    --text-soft:#9fb2c9;
+    --text-mute:#64748b;
+    --mono:'JetBrains Mono','Courier New',monospace;
+    --sans:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+
+  .grid-overlay{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(34,211,238,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34,211,238,0.04) 1px, transparent 1px);
+    background-size:44px 44px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  }
+
+  nav{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 40px;
+    background:rgba(7,12,22,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:0.5px;}
+  .brand-mark{
+    width:34px;height:34px;border-radius:8px;
+    background:linear-gradient(135deg, var(--cyan) 0%, var(--cyan-dim) 100%);
+    display:flex;align-items:center;justify-content:center;
+    color:#04141a;font-family:var(--mono);font-weight:700;font-size:14px;
+    box-shadow:0 0 20px var(--cyan-glow);
+  }
+  .brand-name{font-size:15px;}
+  .brand-sub{display:block;font-size:10px;color:var(--text-mute);font-weight:400;letter-spacing:1.5px;text-transform:uppercase;}
+  .nav-links{display:flex;gap:28px;align-items:center;}
+  .nav-links a{
+    font-size:13px;color:var(--text-soft);font-weight:500;
+    position:relative;padding:4px 0;transition:color .2s;
+  }
+  .nav-links a:hover{color:var(--cyan);}
+  .nav-links a::after{
+    content:'';position:absolute;left:0;bottom:-2px;width:0;height:1px;
+    background:var(--cyan);transition:width .2s;
+  }
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{
+    padding:9px 18px;border:1px solid var(--cyan-dim);border-radius:6px;
+    color:var(--cyan);font-size:13px;font-weight:600;white-space:nowrap;
+    transition:all .2s;
+  }
+  .nav-cta:hover{background:var(--cyan);color:#04141a;box-shadow:0 0 24px var(--cyan-glow);}
+
+  section{position:relative;z-index:1;padding:100px 40px;max-width:1180px;margin:0 auto;}
+
+  .hero{
+    padding:110px 40px 40px;
+    max-width:1180px;margin:0 auto;
+    display:grid;grid-template-columns:1.1fr 0.9fr;gap:50px;align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--cyan);border:1px solid var(--line);border-radius:20px;
+    padding:6px 14px;margin-bottom:24px;
+  }
+  .pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);
+    box-shadow:0 0 8px var(--cyan);animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+  .hero h1{
+    font-size:52px;line-height:1.08;font-weight:700;letter-spacing:-1px;margin-bottom:18px;
+  }
+  .hero h1 span{
+    background:linear-gradient(90deg, var(--cyan) 0%, #7dd3fc 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lede{font-size:17px;color:var(--text-soft);max-width:480px;margin-bottom:32px;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px;}
+  .btn-primary{
+    background:var(--cyan);color:#04141a;font-weight:600;font-size:14px;
+    padding:13px 24px;border-radius:7px;display:inline-flex;align-items:center;gap:8px;
+    box-shadow:0 0 30px var(--cyan-glow);transition:transform .2s;
+  }
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-ghost{
+    border:1px solid var(--line);color:var(--text);font-weight:600;font-size:14px;
+    padding:13px 24px;border-radius:7px;display:inline-flex;align-items:center;gap:8px;
+    transition:all .2s;
+  }
+  .btn-ghost:hover{border-color:var(--cyan-dim);color:var(--cyan);}
+  .stat-row{display:flex;gap:36px;flex-wrap:wrap;}
+  .stat b{display:block;font-size:22px;color:var(--cyan);font-family:var(--mono);}
+  .stat span{font-size:12px;color:var(--text-mute);text-transform:uppercase;letter-spacing:0.5px;}
+
+  .network-box{
+    position:relative;aspect-ratio:9/16;max-width:340px;margin:0 auto;border:1px solid var(--line);border-radius:16px;
+    background:radial-gradient(circle at 30% 30%, rgba(34,211,238,0.08), transparent 60%), var(--bg-alt);
+    overflow:hidden;box-shadow:0 0 40px var(--cyan-glow);
+  }
+  .network-box iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  .corner-tag{
+    position:absolute;top:14px;right:14px;font-family:var(--mono);font-size:10px;
+    color:var(--text-mute);letter-spacing:1px;background:rgba(7,12,22,0.7);
+    padding:3px 8px;border-radius:6px;
+  }
+  .corner-tag b{color:var(--cyan);}
+  .hero-caption{text-align:center;font-size:12.5px;color:var(--text-mute);margin-top:12px;}
+
+  .sec-head{margin-bottom:40px;}
+  .sec-tag{font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:block;}
+  .sec-head h2{font-size:30px;font-weight:700;letter-spacing:-0.5px;margin-bottom:8px;}
+  .sec-head p{color:var(--text-soft);font-size:15px;max-width:560px;}
+
+  .video-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:24px;align-items:start;}
+  .video-card{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    transition:border-color .2s;
+  }
+  .video-card:hover{border-color:var(--cyan-dim);}
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;background:#000;}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  .video-meta{padding:20px 22px;}
+  .video-label{
+    font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--cyan);margin-bottom:8px;display:flex;align-items:center;gap:6px;
+  }
+  .video-meta h3{font-size:17px;font-weight:600;margin-bottom:6px;}
+  .video-meta p{font-size:13px;color:var(--text-soft);}
+  .badge-new{
+    background:rgba(34,211,238,0.12);color:var(--cyan);font-size:10px;font-weight:700;
+    padding:3px 9px;border-radius:20px;letter-spacing:0.5px;text-transform:uppercase;
+    border:1px solid var(--cyan-dim);
+  }
+
+  .resource-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .res-card{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 24px;
+    display:flex;flex-direction:column;gap:14px;transition:all .25s;position:relative;
+  }
+  .res-card:hover{border-color:var(--cyan-dim);background:var(--card-hover);transform:translateY(-3px);}
+  .res-icon{
+    width:42px;height:42px;border-radius:10px;background:rgba(34,211,238,0.1);
+    display:flex;align-items:center;justify-content:center;color:var(--cyan);font-size:20px;
+    border:1px solid var(--line);
+  }
+  .res-card h3{font-size:16px;font-weight:600;}
+  .res-card p{font-size:13px;color:var(--text-soft);flex-grow:1;}
+  .res-tag{font-family:var(--mono);font-size:10px;color:var(--text-mute);letter-spacing:1px;text-transform:uppercase;}
+  .res-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:8px;border-top:1px solid var(--line-soft);}
+  .res-link{font-size:13px;font-weight:600;color:var(--cyan);}
+  .dl-btn{
+    width:32px;height:32px;border-radius:7px;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;color:var(--text-soft);
+    flex-shrink:0;transition:all .2s;
+  }
+  .dl-btn:hover{border-color:var(--cyan-dim);color:var(--cyan);background:rgba(34,211,238,0.08);}
+
+  .banner{
+    background:linear-gradient(120deg, #0c1c2b 0%, #0a1526 100%);
+    border:1px solid var(--line);border-radius:16px;
+    padding:44px 48px;display:flex;align-items:center;justify-content:space-between;gap:30px;
+    position:relative;overflow:hidden;
+  }
+  .banner::before{
+    content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;
+    border-radius:50%;background:radial-gradient(circle, var(--cyan-glow), transparent 70%);
+  }
+  .banner-text h3{font-size:22px;font-weight:700;margin-bottom:8px;}
+  .banner-text p{font-size:14px;color:var(--text-soft);max-width:480px;}
+  .quote-marks{font-family:var(--mono);font-size:44px;color:var(--cyan-dim);line-height:0.6;margin-bottom:6px;display:block;}
+
+  .tool-callout{
+    display:flex;align-items:center;justify-content:space-between;gap:30px;
+    background:var(--card);border:1px solid var(--line);border-radius:16px;padding:36px 44px;
+    margin-top:24px;
+  }
+  .tool-left{display:flex;align-items:center;gap:20px;}
+  .tool-icon{
+    width:56px;height:56px;border-radius:12px;background:rgba(34,211,238,0.1);
+    display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--cyan);
+    border:1px solid var(--cyan-dim);flex-shrink:0;
+  }
+  .tool-left h3{font-size:18px;font-weight:700;margin-bottom:4px;}
+  .tool-left p{font-size:13px;color:var(--text-soft);}
+
+  .about-wrap{
+    display:grid;grid-template-columns:0.7fr 1.3fr;gap:44px;align-items:center;
+    background:var(--card);border:1px solid var(--line);border-radius:18px;padding:48px;
+  }
+  .avatar{
+    width:140px;height:140px;border-radius:16px;
+    background:linear-gradient(135deg, rgba(34,211,238,0.25), rgba(8,145,178,0.05));
+    border:1px solid var(--cyan-dim);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:32px;font-weight:700;color:var(--cyan);
+    margin:0 auto;overflow:hidden;
+  }
+  .avatar img{width:100%;height:100%;object-fit:cover;}
+  .about-copy h2{font-size:26px;font-weight:700;margin-bottom:10px;}
+  .about-copy p{font-size:14.5px;color:var(--text-soft);margin-bottom:22px;max-width:520px;}
+  .social-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .social-btn{
+    display:flex;align-items:center;gap:9px;padding:11px 20px;border-radius:8px;
+    border:1px solid var(--line);font-size:13.5px;font-weight:600;transition:all .2s;
+  }
+  .social-btn:hover{border-color:var(--cyan-dim);color:var(--cyan);}
+  .social-btn.linkedin:hover{background:rgba(34,211,238,0.08);}
+
+  footer{
+    border-top:1px solid var(--line-soft);padding:32px 40px;
+    display:flex;justify-content:space-between;align-items:center;
+    max-width:1180px;margin:0 auto;color:var(--text-mute);font-size:12.5px;
+  }
+  footer .foot-links{display:flex;gap:20px;}
+  footer a:hover{color:var(--cyan);}
+
+  @media (max-width:860px){
+    .hero{grid-template-columns:1fr;}
+    .video-grid{grid-template-columns:1fr;}
+    .resource-grid{grid-template-columns:1fr;}
+    .about-wrap{grid-template-columns:1fr;text-align:center;}
+    .banner,.tool-callout{flex-direction:column;text-align:center;}
+    section{padding:70px 22px;}
+    nav{padding:14px 20px;}
+    .nav-links{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<nav>
+  <div class="brand">
+    <div class="brand-mark">KW</div>
+    <div>
+      <span class="brand-name">Kris Watson</span>
+      <span class="brand-sub">IoT &amp; Edge AI Recruiting</span>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#deck">Deck</a>
+    <a href="#videos">Videos</a>
+    <a href="#guides">Guides</a>
+    <a href="#recommendations">Recommendations</a>
+    <a href="#about">Connect</a>
+  </div>
+  <a class="nav-cta" href="https://watsonkris.github.io/bad-hire-calculator" target="_blank" rel="noopener">Bad Hire Calculator</a>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="eyebrow"><span class="pulse-dot"></span> Founding Recruiter &middot; Scale Teams that Exit</div>
+    <h1>Hiring talent for <span>IoT &amp; Edge AI</span>, done right the first time.</h1>
+    <p class="lede">18 years placing sales, GTM, and technical leadership in specialized hardware and AI-at-the-edge companies — with the public track record to prove it.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#videos">Watch the featured talk</a>
+      <a class="btn-ghost" href="#recommendations">Read client recommendations</a>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><b>18 yrs</b><span>Track record</span></div>
+      <div class="stat"><b>4-5x</b><span>Return in 18 months</span></div>
+      <div class="stat"><b>25%</b><span>Avg. on base, milestone-based</span></div>
+    </div>
+  </div>
+  <div>
+    <div class="network-box">
+      <span class="corner-tag">FEATURED <b>SHORT</b></span>
+      <iframe src="https://www.youtube.com/embed/t0s5IsFZHtU" title="Featured short" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <p class="hero-caption">A 60-second take, in my own words.</p>
+  </div>
+</section>
+
+<section id="deck">
+  <div class="sec-head">
+    <span class="sec-tag">// Presentation</span>
+    <h2>IoT &amp; Edge AI — the presentation deck</h2>
+    <p>The full talent-strategy presentation: who I help, the problem specialized hiring solves, and the ROI case for doing it right.</p>
+  </div>
+  <div class="res-card" style="flex-direction:row;align-items:center;justify-content:space-between;">
+    <div style="display:flex;align-items:center;gap:20px;">
+      <div class="res-icon" style="width:52px;height:52px;font-size:24px;">&#9636;</div>
+      <div>
+        <h3 style="margin-bottom:4px;">Kris Watson — IoT &amp; Edge AI Presentation</h3>
+        <p style="margin:0;">Scale teams that exit &middot; investment models &middot; proof points</p>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <a href="./iot-edge-ai-presentation.pdf" target="_blank" style="font-size:13px;font-weight:600;color:var(--cyan);padding:10px 20px;background:rgba(34,211,238,0.1);border-radius:8px;white-space:nowrap;">View deck</a>
+      <a class="dl-btn" href="./iot-edge-ai-presentation.pdf" download aria-label="Download deck" title="Download deck">&#8681;</a>
+    </div>
+  </div>
+</section>
+
+<section id="videos">
+  <div class="sec-head">
+    <span class="sec-tag">// Watch</span>
+    <h2>Featured &amp; latest</h2>
+    <p>A featured talk on building durable IoT and Edge AI teams, plus the most recent collaboration with the Edge AI Foundation.</p>
+  </div>
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="video-frame">
+        <iframe src="https://www.youtube.com/embed/DT5aLoh83pY" title="Featured talk" allowfullscreen></iframe>
+      </div>
+      <div class="video-meta">
+        <div class="video-label"><span class="pulse-dot"></span> Featured talk</div>
+        <h3>Building teams that exit in IoT &amp; Edge AI</h3>
+        <p>My core talent strategy talk — the one I send clients first.</p>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="video-frame">
+        <iframe src="https://www.youtube.com/embed/q3PEDAzD258" title="Edge AI Foundation collaboration" allowfullscreen></iframe>
+      </div>
+      <div class="video-meta">
+        <div class="video-label">Latest collaboration <span class="badge-new">New</span></div>
+        <h3>With the Edge AI Foundation</h3>
+        <p>My newest appearance alongside the Edge AI Foundation community.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="guides">
+  <div class="sec-head">
+    <span class="sec-tag">// Resource library</span>
+    <h2>Guides for candidates &amp; hiring teams</h2>
+    <p>Field-tested templates I use on real searches — shared so both sides of the table walk in prepared.</p>
+  </div>
+  <div class="resource-grid">
+    <div class="res-card">
+      <div class="res-icon">&#9639;</div>
+      <span class="res-tag">Candidate-facing</span>
+      <h3>Candidate Interview Prep Guide 2026</h3>
+      <p>Company research, story prep, and question banks so candidates walk in confident.</p>
+      <div class="res-actions">
+        <a class="res-link" href="./candidate-interview-prep-guide-2026.pdf" target="_blank">Open PDF</a>
+        <a class="dl-btn" href="./candidate-interview-prep-guide-2026.pdf" download aria-label="Download guide" title="Download guide">&#8681;</a>
+      </div>
+    </div>
+    <div class="res-card">
+      <div class="res-icon">&#9640;</div>
+      <span class="res-tag">Hiring team</span>
+      <h3>Interview Process Guide 2026</h3>
+      <p>The 25-minute call template — core questions, BD intelligence, and scoring rubric.</p>
+      <div class="res-actions">
+        <a class="res-link" href="./interview-process-guide-2026.pdf" target="_blank">Open PDF</a>
+        <a class="dl-btn" href="./interview-process-guide-2026.pdf" download aria-label="Download guide" title="Download guide">&#8681;</a>
+      </div>
+    </div>
+    <div class="res-card">
+      <div class="res-icon">&#9095;</div>
+      <span class="res-tag">Tool</span>
+      <h3>Bad Hire Calculator</h3>
+      <p>Quantify what a mis-hire actually costs before the next req goes out.</p>
+      <div class="res-actions">
+        <a class="res-link" href="https://watsonkris.github.io/bad-hire-calculator" target="_blank">Launch tool</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="recommendations">
+  <div class="banner">
+    <div class="banner-text">
+      <span class="quote-marks">&quot;</span>
+      <h3>18 years of public references, not private promises</h3>
+      <p>Client and candidate recommendations, verified and visible on LinkedIn — the proof behind the 4-5x return claim.</p>
+    </div>
+    <a class="btn-primary" href="https://www.linkedin.com/in/watsonkris/details/recommendations/" target="_blank" rel="noopener">Read recommendations</a>
+  </div>
+
+  <div class="tool-callout">
+    <div class="tool-left">
+      <div class="tool-icon">&#9095;</div>
+      <div>
+        <h3>What does a bad hire actually cost you?</h3>
+        <p>Run the numbers in my interactive calculator before your next search.</p>
+      </div>
+    </div>
+    <a class="btn-ghost" href="https://watsonkris.github.io/bad-hire-calculator" target="_blank" rel="noopener">Open calculator</a>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-wrap">
+    <div class="avatar"><img src="./kris-watson.jpg" alt="Kris Watson" onerror="this.style.display='none'; this.closest('.avatar').textContent='KW';"></div>
+    <div class="about-copy">
+      <span class="sec-tag">// Get to know me more</span>
+      <h2>Hi, I'm Kris Watson</h2>
+      <p>Search firm owner and Founding Recruiter, helping scale-ups in emerging tech across fundraising and critical hiring events.</p>
+      <div class="social-row">
+        <a class="social-btn linkedin" href="https://www.linkedin.com/in/watsonkris/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="social-btn" href="https://www.youtube.com/@kriswatson2338/" target="_blank" rel="noopener">YouTube</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>&copy; 2026 Kris Watson &middot; Executive Recruiting</span>
+  <div class="foot-links">
+    <a href="https://www.linkedin.com/in/watsonkris/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://www.youtube.com/@kriswatson2338/" target="_blank" rel="noopener">YouTube</a>
+    <a href="https://watsonkris.github.io/bad-hire-calculator" target="_blank" rel="noopener">Bad Hire Calculator</a>
+  </div>
+</footer>
+
+</body>
+</html>
